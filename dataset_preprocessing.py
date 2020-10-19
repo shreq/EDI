@@ -4,18 +4,22 @@ import arff
 
 # read file
 df = pandas.read_csv(
-    'access_log_Jul95',
+    '../access_log_Jul95',
     sep=' ',
+    encoding='unicode_escape',
     header=None,
     na_values='-',
-    usecols=[0, 3, 4, 5, 6, 7],
-    names=['Address', 'Timestamp', '4', 'Request', 'Response_Code', 'Bytes'],
+    error_bad_lines=False,
+    names=['Host', 'Identifier', 'User', 'Timestamp', 'Time_Offset', 'Request', 'Response_Code', 'Bytes'],
     dtype='str'
 )
 
+# drop unused columns
+df.dropna(axis=1, how='all', inplace=True)
+
 # handle timestamps
-df['Timestamp'] = df['Timestamp'] + df['4']
-df.drop(['4'], axis=1, inplace=True)
+df['Timestamp'] = df['Timestamp'] + df['Time_Offset']
+df.drop(['Time_Offset'], axis=1, inplace=True)
 df['Timestamp'] = pandas.to_datetime(df['Timestamp'], format='[%d/%b/%Y:%H:%M:%S%z]')
 df['Date'] = [d.date() for d in df['Timestamp']]
 df['Time'] = [d.time() for d in df['Timestamp']]
@@ -30,7 +34,7 @@ df['Bytes'] = df['Bytes'].astype('int64')
 
 # split requests
 req = df['Request'].str.split(' ').str
-df['Request_Method'], df['Request_Url'] = req[0], req[1]
+df['Request_Method'], df['Request_Url'], df['Request_Protocol'] = req[0], req[1], req[2]
 df.drop('Request', axis=1, inplace=True)
 
 # handle response codes
@@ -47,11 +51,12 @@ print(df.isna().sum())
 
 # save results to arff file
 print("""
-Since arff library does not provide support for python's date format thus "Date" and "Time" have
-to be changed manually in arff file from string to: "date YYYY-MM-dd" and "date HH:mm:ss"
+Since arff library does not provide support for python's date format thus
+"Date" and "Time" have to be changed manually in arff file from string to:
+"date YYYY-MM-dd" and "date HH:mm:ss"
 """)
 df = df.sample(50000, random_state=666)
-df = df[['Address', 'Date', 'Time', 'Request_Method', 'Request_Url', 'Response_Code', 'Bytes']]
+df = df[['Host', 'Date', 'Time', 'Request_Method', 'Request_Url', 'Request_Protocol', 'Response_Code', 'Bytes']]
 arff.dump('access_log_Jul95_50k.arff',
           df.values,
           relation='access_log_Jul95_50k',
