@@ -62,7 +62,8 @@ df = df[['Host', 'Date', 'Time', 'Request_Method', 'Request_Url', 'Request_Proto
 df = df[(df['Response_Code'] == 200) & (df['Request_Method'] == 'GET')]
 
 # drop records with graphic files
-df = df[~df['Request_Url'].str.contains('.jpg|.jpeg|.gif|.bmp|.xbm')]
+df = df[~df['Request_Url'].str.contains(
+    '.jpg|.jpeg|.gif|.bmp|.xbm|.png|.mpg|.mpeg')]
 
 arff.dump('access_log_Jul95_50k.arff',
           df.values,
