@@ -14,6 +14,9 @@ df = pandas.read_csv(
     dtype='str'
 )
 
+# cut the file to first 50000 records
+df = df.iloc[:50000]
+
 # drop unused columns
 df.dropna(axis=1, how='all', inplace=True)
 
@@ -55,7 +58,6 @@ Since arff library does not provide support for python's date format thus
 "Date" and "Time" have to be changed manually in arff file from string to:
 "date YYYY-MM-dd" and "date HH:mm:ss"
 """)
-df = df.sample(50000, random_state=666)
 df = df[['Host', 'Date', 'Time', 'Request_Method', 'Request_Url', 'Request_Protocol', 'Response_Code', 'Bytes']]
 
 # choose records with GET method and response code 200
@@ -69,4 +71,5 @@ arff.dump('access_log_Jul95_50k.arff',
           df.values,
           relation='access_log_Jul95_50k',
           names=df.columns)
-df.to_csv('access_log_Jul95_50k.csv')
+
+df.to_csv('access_log_Jul95_50k.csv', index=False)
