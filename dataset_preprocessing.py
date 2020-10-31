@@ -67,9 +67,9 @@ df = df[(df['Response_Code'] == 200) & (df['Request_Method'] == 'GET')]
 df = df[~df['Request_Url'].str.contains(
     '.jpg|.jpeg|.gif|.bmp|.xbm|.png|.mpg|.mpeg')]
 
-arff.dump('access_log_Jul95_50k.arff',
+arff.dump('output/access_log_Jul95_50k.arff',
           df.values,
           relation='access_log_Jul95_50k',
           names=df.columns)
 
-df.to_csv('access_log_Jul95_50k.csv', index=False)
+df.to_csv('output/access_log_Jul95_50k.csv', index=False)

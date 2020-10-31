@@ -5,11 +5,11 @@ timeout = 1800
 percent = 0.5
 sessions = []
 
-df = pd.read_csv('access_log_Jul95_50k.csv')
+df = pd.read_csv('output/access_log_Jul95_50k.csv')
 
 # extract users
 users = df['Host'].unique()
-pd.DataFrame(users).to_csv('users.csv', index=False, header=None)
+pd.DataFrame(users).to_csv('output/users.csv', index=False, header=None)
 
 # get sites' count and percent values
 sites = df['Request_Url']
@@ -22,7 +22,7 @@ result = pd.concat([sitesCounts, sitesPercents], axis=1).reset_index().rename(
 # get most popular sites
 popularSites = result[result['Percent'] > percent]
 pd.DataFrame(popularSites).to_csv(
-    'popular_sites.csv', index=False, float_format='%.3f')
+    'output/popular_sites.csv', index=False, float_format='%.3f')
 
 # concat date and time to extract sessions
 df['Date'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
@@ -45,4 +45,11 @@ for user in users:
         sessionRequests.append(req['Request_Url'])
         end = req['Date']
 
-pd.DataFrame(sessions).to_csv('sessions.csv', index_label='Id')
+#
+sessions = pd.DataFrame(sessions)
+sessions['Time'] = sessions['End'] - sessions['Start']
+sessions['Actions_Count'] = sessions['Requests'].str.len()
+sessions['Time/Action'] = sessions['Time'] / sessions['Actions_Count']
+print(sessions.head(5).to_string())
+
+pd.DataFrame(sessions).to_csv('output/sessions.csv', index_label='Id')
