@@ -44,8 +44,7 @@ for user in users:
             timePerAction = time/(actionsCount)
 
             sessions.append({**{'User': user, 'Time': time, 'Actions_Count': actionsCount,
-                                'Time_Per_Action': timePerAction,
-                                'Requests': sessionRequests}, **popularSitesFlags})
+                                'Time_Per_Action': timePerAction}, **popularSitesFlags})
             sessionRequests = []
             start = req['Date']
 
@@ -58,7 +57,7 @@ for user in users:
 sessions = pd.DataFrame(sessions)
 print(sessions.head(5))
 
-pd.DataFrame(sessions).to_csv('output/sessions.csv', index_label='Id')
+pd.DataFrame(sessions).to_csv('output/sessions.csv', index=False)
 sessions[sessions.columns[5:]] = sessions[sessions.columns[5:]].astype(object)
 
 arff.dump('output/sessions.arff',
