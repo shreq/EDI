@@ -1,6 +1,6 @@
 import pandas
 import arff
-import os
+import pathlib
 
 
 # read file
@@ -68,7 +68,7 @@ df = df[(df['Response_Code'] == 200) & (df['Request_Method'] == 'GET')]
 df = df[~df['Request_Url'].str.contains(
     '.jpg|.jpeg|.gif|.bmp|.xbm|.png|.mpg|.mpeg|.JPG|.JPEG|.GIF|.BMP|.XBM|.PNG|.MPG|.MPEG')]
 
-os.mkdir('output')
+pathlib.Path('output').mkdir(exist_ok=True)
 arff.dump('output/access_log_Jul95_50k.arff',
           df.values,
           relation='access_log_Jul95_50k',

@@ -49,7 +49,7 @@ for user in users:
 sessions = pd.DataFrame(sessions)
 sessions['Time'] = (sessions['End'] - sessions['Start']).apply(lambda x: x.total_seconds())
 sessions['Actions_Count'] = sessions['Requests'].str.len()
-sessions['Time_Per_Action'] = sessions['Time'] / sessions['Actions_Count']
+sessions['Time_Per_Action'] = sessions['Time'] / (sessions['Actions_Count'] - 1)
 print(sessions.head(5))
 
 pd.DataFrame(sessions).to_csv('output/sessions.csv', index_label='Id')
