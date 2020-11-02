@@ -39,8 +39,13 @@ for user in users:
 
     for index, req in requests.iterrows():
         if req['Date'] - start > timedelta(seconds=timeout):
-            sessions.append({**{'User': user, 'Start': start,
-                                'End': end, 'Requests': sessionRequests}, **popularSitesFlags})
+            time = (end - start).total_seconds()
+            actionsCount = len(sessionRequests)
+            timePerAction = time/(actionsCount)
+
+            sessions.append({**{'User': user, 'Time': time, 'Actions_Count': actionsCount,
+                                'Time_Per_Action': timePerAction,
+                                'Requests': sessionRequests}, **popularSitesFlags})
             sessionRequests = []
             start = req['Date']
 
@@ -50,11 +55,7 @@ for user in users:
         if req['Request_Url'] in popularSitesFlags:
             popularSitesFlags[req['Request_Url']] = True
 
-#
 sessions = pd.DataFrame(sessions)
-sessions['Time'] = (sessions['End'] - sessions['Start']).apply(lambda x: x.total_seconds())
-sessions['Actions_Count'] = sessions['Requests'].str.len()
-sessions['Time_Per_Action'] = sessions['Time'] / (sessions['Actions_Count'] - 1)
 print(sessions.head(5))
 
 pd.DataFrame(sessions).to_csv('output/sessions.csv', index_label='Id')
