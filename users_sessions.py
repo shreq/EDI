@@ -39,8 +39,8 @@ for user in users:
 
     for index, req in requests.iterrows():
         if req['Date'] - start > timedelta(seconds=timeout):
-            sessions.append({{'User': user, 'Start': start,
-                              'End': end, 'Requests': sessionRequests}, popularSitesFlags})
+            sessions.append({**{'User': user, 'Start': start,
+                                'End': end, 'Requests': sessionRequests}, **popularSitesFlags})
             sessionRequests = []
             start = req['Date']
 
@@ -58,7 +58,7 @@ sessions['Time_Per_Action'] = sessions['Time'] / (sessions['Actions_Count'] - 1)
 print(sessions.head(5))
 
 pd.DataFrame(sessions).to_csv('output/sessions.csv', index_label='Id')
-arff.dump('output/sessions.arff',
-          sessions.values,
-          relation='sessions',
-          names=sessions.columns)
+# arff.dump('output/sessions.arff',
+#           sessions.values,
+#           relation='sessions',
+#           names=sessions.columns)
