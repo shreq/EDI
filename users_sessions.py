@@ -1,4 +1,5 @@
 import pandas as pd
+import arff
 from datetime import timedelta
 
 timeout = 1800
@@ -34,16 +35,20 @@ for user in users:
     start = requests.iloc[0]['Date']
     end = start
     sessionRequests = []
+    popularSitesFlags = {value: False for value in popularSites['Site']}
 
     for index, req in requests.iterrows():
         if req['Date'] - start > timedelta(seconds=timeout):
-            sessions.append({'User': user, 'Start': start,
-                             'End': end, 'Requests': sessionRequests})
+            sessions.append({{'User': user, 'Start': start,
+                              'End': end, 'Requests': sessionRequests}, popularSitesFlags})
             sessionRequests = []
             start = req['Date']
 
         sessionRequests.append(req['Request_Url'])
         end = req['Date']
+
+        if req['Request_Url'] in popularSitesFlags:
+            popularSitesFlags[req['Request_Url']] = True
 
 #
 sessions = pd.DataFrame(sessions)
@@ -53,3 +58,7 @@ sessions['Time_Per_Action'] = sessions['Time'] / (sessions['Actions_Count'] - 1)
 print(sessions.head(5))
 
 pd.DataFrame(sessions).to_csv('output/sessions.csv', index_label='Id')
+arff.dump('output/sessions.arff',
+          sessions.values,
+          relation='sessions',
+          names=sessions.columns)
