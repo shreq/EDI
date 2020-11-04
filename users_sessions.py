@@ -44,7 +44,8 @@ for user in users:
             timePerAction = time/(actionsCount)
 
             sessions.append({**{'User': user, 'Time': time, 'Actions_Count': actionsCount,
-                                'Time_Per_Action': timePerAction}, **popularSitesFlags})
+                                'Time_Per_Action': timePerAction,
+                                'Requests': sessionRequests}, **popularSitesFlags})
             sessionRequests = []
             start = req['Date']
 
@@ -57,9 +58,24 @@ for user in users:
 sessions = pd.DataFrame(sessions)
 print(sessions.head(5))
 
-pd.DataFrame(sessions).to_csv('output/sessions.csv', index=False)
-sessions[sessions.columns[5:]] = sessions[sessions.columns[5:]].astype(object)
+#
+userFlags = pd.DataFrame(index=sessions['User'].unique())
+for site in popularSites['Site']:
+    userFlags[site] = [(site in row) for row in sessions.groupby(['User'])['Requests'].sum()]
+userFlags[:] = userFlags[:].astype('object')
+print(userFlags)
 
+userFlags.to_csv('output/hostflags.csv', index=False)
+arff.dump('output/hostflags.arff',
+          userFlags.values,
+          relation='hostflags',
+          names=userFlags.columns)
+
+#
+sessions.drop('Requests', axis=1, inplace=True)
+
+sessions.to_csv('output/sessions.csv', index=False)
+sessions[sessions.columns[5:]] = sessions[sessions.columns[5:]].astype(object)
 arff.dump('output/sessions.arff',
           sessions.values,
           relation='sessions',
