@@ -58,7 +58,7 @@ for user in users:
 sessions = pd.DataFrame(sessions)
 print(sessions.head(5))
 
-#
+# user-site flags
 userFlags = pd.DataFrame(index=sessions['User'].unique())
 for site in popularSites['Site']:
     userFlags[site] = [(site in row) for row in sessions.groupby(['User'])['Requests'].sum()]
@@ -71,9 +71,22 @@ arff.dump('output/hostflags.arff',
           relation='hostflags',
           names=userFlags.columns)
 
-#
+# discretization
+quantile33 = sessions.iloc[:, 1:4].quantile(0.33)
+quantile66 = sessions.iloc[:, 1:4].quantile(0.66)
+for column in sessions.iloc[:, 1:4].columns:
+    sessions[column] = sessions[column].apply(lambda row:
+        'Low' if row < quantile33[column] else 'Medium' if row < quantile66[column] else 'High'
+    )
+
+# sessions save
 sessions.drop('Requests', axis=1, inplace=True)
 
+print("""
+Columns Time, Actions_Count and Time_Per_Actions are discretized and to
+make them suitable for weka their format needs to be changed manually
+in arff file from string to {Low, Medium, High}
+""")
 sessions.to_csv('output/sessions.csv', index=False)
 sessions[sessions.columns[5:]] = sessions[sessions.columns[5:]].astype(object)
 arff.dump('output/sessions.arff',
