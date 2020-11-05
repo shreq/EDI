@@ -39,13 +39,16 @@ for user in users:
 
     for index, req in requests.iterrows():
         if req['Date'] - start > timedelta(seconds=timeout):
-            time = (end - start).total_seconds()
-            actionsCount = len(sessionRequests)
-            timePerAction = time/(actionsCount)
+            if len(sessionRequests) > 1:
+                time = (end - start).total_seconds()
+                actionsCount = len(sessionRequests)
+                timePerAction = time/(actionsCount - 1)
 
-            sessions.append({**{'User': user, 'Time': time, 'Actions_Count': actionsCount,
-                                'Time_Per_Action': timePerAction,
-                                'Requests': sessionRequests}, **popularSitesFlags})
+                sessions.append({**{'User': user, 'Time': time, 'Actions_Count': actionsCount,
+                                    'Time_Per_Action': timePerAction,
+                                    'Requests': sessionRequests}, **popularSitesFlags})
+            popularSitesFlags = {
+                value: False for value in popularSites['Site']}
             sessionRequests = []
             start = req['Date']
 
