@@ -74,25 +74,32 @@ arff.dump('output/hostflags.arff',
           relation='hostflags',
           names=userFlags.columns)
 
+# drop unnecessary columns
+sessions.drop(['User', 'Requests'], axis=1, inplace=True)
+
+# sessions save (pre-discretization)
+sessions.to_csv('output/sessions.csv', index=False)
+arff.dump('output/sessions.arff',
+          sessions.values,
+          relation='sessions',
+          names=sessions.columns)
+
 # discretization
-quantile33 = sessions.iloc[:, 1:4].quantile(0.33)
-quantile66 = sessions.iloc[:, 1:4].quantile(0.66)
-for column in sessions.iloc[:, 1:4].columns:
+quantile33 = sessions.loc[:, ['Time', 'Actions_Count', 'Time_Per_Action']].quantile(0.33)
+quantile66 = sessions.loc[:, ['Time', 'Actions_Count', 'Time_Per_Action']].quantile(0.66)
+for column in sessions.loc[:, ['Time', 'Actions_Count', 'Time_Per_Action']].columns:
     sessions[column] = sessions[column].apply(lambda row:
         'Low' if row < quantile33[column] else 'Medium' if row < quantile66[column] else 'High'
     )
 
-# sessions save
-sessions.drop('Requests', axis=1, inplace=True)
-
+# sessions save (post-discretization)
 print("""
 Columns Time, Actions_Count and Time_Per_Actions are discretized and to
 make them suitable for weka their format needs to be changed manually
 in arff file from string to {Low, Medium, High}
 """)
-sessions.to_csv('output/sessions.csv', index=False)
-sessions[sessions.columns[5:]] = sessions[sessions.columns[5:]].astype(object)
-arff.dump('output/sessions.arff',
+sessions.to_csv('output/sessions-discretized.csv', index=False)
+arff.dump('output/sessions-discretized.arff',
           sessions.values,
-          relation='sessions',
+          relation='sessions-discretized',
           names=sessions.columns)
