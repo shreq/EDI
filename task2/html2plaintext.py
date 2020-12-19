@@ -28,13 +28,16 @@ text = []
 pages = {}
 for i, line in enumerate(lines):
     if 'Page ' in line:
-        pages[lines[i - 1]] = ' '.join(text[:-1]).replace('\n', ' ')
+        pages[lines[i - 1].replace('\n', ' ').strip()] = ' '.join(text[:-1]).replace('\n', ' ')
         text.clear()
         continue
     text.append(line)
-# print(pages[u'Powiadomienie [http://ftims.p.lodz.pl/course/view.php?id=3]\n'])
 
 df = pandas.DataFrame(list(pages.keys()), columns=['title'])
 df['text'] = list(pages.values())
+df = df[1:]
+
+df['title'] = [f'document_{i}' for i in range(len(df['title']))]
+
 df.to_csv('pages.csv', index=False)
 arff.dump('pages.arff', df.values, relation='pages', names=df.columns)
