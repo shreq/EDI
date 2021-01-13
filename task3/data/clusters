@@ -1,29 +1,31 @@
-Attribute                                          Full Data          0          1          2          3          4
-/shuttle/countdown/                                    False       True      False      False       True       True
-/shuttle/missions/sts-71/images/images.html            False       True      False      False       True      False
-/shuttle/missions/sts-71/mission-sts-71.html           False       True      False      False      False       True
-/                                                      False       True      False      False      False      False
-/ksc.html                                              False       True      False      False      False      False
-/shuttle/countdown/liftoff.html                        False       True      False       True      False      False
-/shuttle/missions/missions.html                        False       True      False      False      False      False
-/htbin/cdt_main.pl                                     False       True      False       True      False      False
-/shuttle/missions/sts-71/movies/movies.html            False      False      False      False      False      False
-/history/apollo/apollo.html                            False       True      False      False      False      False
-/history/apollo/apollo-13/apollo-13.html               False       True      False      False      False      False
-/history/history.html                                  False       True      False      False      False      False
-/shuttle/countdown/countdown.html                      False      False      False      False      False      False
-/shuttle/technology/sts-newsref/stsref-toc.html        False       True      False      False      False      False
-/shuttle/resources/orbiters/atlantis.html              False      False      False      False      False      False
-/htbin/cdt_clock.pl                                    False      False      False      False      False      False
-/software/winvn/winvn.html                             False      False      False      False      False      False
-/shuttle/countdown/lps/fr.html                         False      False      False      False      False      False
-/shuttle/missions/sts-67/mission-sts-67.html           False      False      False      False      False      False
-/history/apollo/apollo-13/apollo-13-info.html          False       True      False      False      False      False
-/history/apollo/apollo-11/apollo-11.html               False      False      False      False      False      False
-/facilities/lc39a.html                                 False      False      False      False      False      False
-/shuttle/missions/sts-70/mission-sts-70.html           False      False      False      False      False      False
-/shuttle/countdown/tour.html                           False      False      False      False      False      False
-/history/apollo/apollo-13/                             False      False      False      False      False      False
-/history/apollo/apollo-13/images/                      False      False      False      False      False      False
-/shuttle/missions/sts-71/news/                         False      False      False      False      False      False
-/shuttle/missions/sts-63/mission-sts-63.html           False      False      False      False      False      False
+Attribute                                          Full Data          0          1          2          3          4          5          6          7          8          9
+                                                     (312.0)     (20.0)     (95.0)     (22.0)     (54.0)     (38.0)     (17.0)     (31.0)      (9.0)     (16.0)     (10.0)
+==========================================================================================================================================================================
+/shuttle/countdown/                                    False       True      False      False       True       True       True      False       True      False      False
+/shuttle/missions/sts-71/images/images.html            False       True      False      False       True      False      False      False       True      False      False
+/shuttle/missions/sts-71/mission-sts-71.html           False       True      False      False       True       True      False      False       True      False      False
+/                                                      False       True      False      False      False      False       True      False       True      False       True
+/ksc.html                                              False       True      False      False      False      False      False      False       True       True       True
+/shuttle/countdown/liftoff.html                        False       True      False       True      False      False      False      False       True      False      False
+/shuttle/missions/missions.html                        False       True      False      False      False      False      False       True       True      False      False
+/htbin/cdt_main.pl                                     False       True      False       True      False      False      False      False       True      False      False
+/shuttle/missions/sts-71/movies/movies.html            False      False      False      False      False      False      False      False       True      False      False
+/history/apollo/apollo.html                            False       True      False      False      False      False      False      False       True      False      False
+/history/apollo/apollo-13/apollo-13.html               False       True      False      False      False      False      False      False       True      False      False
+/history/history.html                                  False       True      False      False      False      False      False      False       True      False      False
+/shuttle/countdown/countdown.html                      False       True      False      False      False      False      False      False      False      False      False
+/shuttle/technology/sts-newsref/stsref-toc.html        False       True      False      False      False      False      False      False      False      False      False
+/shuttle/resources/orbiters/atlantis.html              False      False      False      False      False      False      False      False       True      False      False
+/htbin/cdt_clock.pl                                    False      False      False      False      False      False      False      False      False      False      False
+/software/winvn/winvn.html                             False      False      False      False      False      False      False      False      False      False      False
+/shuttle/countdown/lps/fr.html                         False      False      False      False      False      False      False      False      False      False      False
+/shuttle/missions/sts-67/mission-sts-67.html           False      False      False      False      False      False      False      False       True      False      False
+/history/apollo/apollo-13/apollo-13-info.html          False      False      False      False      False      False      False      False       True      False      False
+/history/apollo/apollo-11/apollo-11.html               False      False      False      False      False      False      False      False      False      False      False
+/facilities/lc39a.html                                 False      False      False      False      False      False      False      False      False      False      False
+/shuttle/missions/sts-70/mission-sts-70.html           False       True      False      False      False      False      False      False      False      False      False
+/shuttle/countdown/tour.html                           False      False      False      False      False      False      False      False      False      False      False
+/history/apollo/apollo-13/                             False      False      False      False      False      False      False      False       True      False      False
+/history/apollo/apollo-13/images/                      False      False      False      False      False      False      False      False       True      False      False
+/shuttle/missions/sts-71/news/                         False      False      False      False      False      False      False      False      False      False      False
+/shuttle/missions/sts-63/mission-sts-63.html           False      False      False      False      False      False      False      False      False      False      False
