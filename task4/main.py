@@ -14,7 +14,7 @@ PATTERN_SIZE = 8
 IMAGE_SIZE = 512
 LEARNING_RATE = 0.01
 MAX_ITER = 10000
-HIDDEN_LAYER_NEURONS = [32, 16, 8, 4]
+HIDDEN_LAYER_NEURONS = [32, 20, 16, 12, 8, 6, 4, 2]
 
 sns.set_theme(style='darkgrid')
 
