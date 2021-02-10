@@ -105,7 +105,7 @@ def main():
 
             if not os.path.exists('output/network'+str(num)):
                 os.makedirs('output/network'+str(num))
-            image.save('output/network'+str(num)+'/out_' + name)
+            image.save('output/network'+str(num)+'/out_' + name.replace('.bmp', '.png'))
 
     for name in test:
         print(dict_of_df[name])
